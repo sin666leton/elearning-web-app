@@ -1,0 +1,11 @@
+<?php
+
+use App\Http\Controllers\v1\AuthController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('/v1')->group(function () {
+    Route::controller(AuthController::class)->group(function () {
+        Route::post('/login', 'login')->middleware('unauthOnly');
+    });
+});
