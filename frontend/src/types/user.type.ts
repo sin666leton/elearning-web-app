@@ -14,3 +14,10 @@ export type TLoginResult = TApiResponse<{
     },
     token: string
 }>
+
+export type TRegisterUser = {
+    name: string,
+    email: string,
+    password: string,
+    role_id: number
+}
