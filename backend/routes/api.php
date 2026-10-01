@@ -7,5 +7,6 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('/v1')->group(function () {
     Route::controller(AuthController::class)->group(function () {
         Route::post('/login', 'login')->middleware('unauthOnly');
+        Route::post('/register', 'register')->middleware('unauthOnly');
     });
 });

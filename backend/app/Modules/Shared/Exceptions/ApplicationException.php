@@ -10,7 +10,7 @@ class ApplicationException extends RuntimeException
 
     public array $errors = [];
 
-    public function __construct(string $message = "", int $code = 0, string $statusCode)
+    public function __construct(string $message = "", int $code = 0, string $statusCode = "ERROR")
     {
         $this->statusCode = $statusCode;
 
