@@ -21,7 +21,6 @@ export default function FormRegister() {
             )}
 
             <div className="space-y-4">
-                {/* Row 1: Nama & Peran (Role) */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                         <label htmlFor="name" className="block text-sm font-semibold text-blue-500">Nama</label>
@@ -53,7 +52,6 @@ export default function FormRegister() {
                     </div>
                 </div>
 
-                {/* Row 2: Email */}
                 <div className="space-y-1.5">
                     <label htmlFor="email" className="block text-sm font-semibold text-blue-500">Email</label>
                     <input
@@ -67,7 +65,6 @@ export default function FormRegister() {
                     {errors.email && <p className="text-xs text-red-500 font-medium mt-1">* {errors.email.message}</p>}
                 </div>
 
-                {/* Row 3: Password & Ulangi Password */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                         <label htmlFor="password" className="block text-sm font-semibold text-blue-500">Password</label>

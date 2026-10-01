@@ -1,13 +1,15 @@
-import { z } from "zod";
-import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { useAuthStore } from '../store/authStore';
-import type { TRegisterResult, TRegisterUser } from '../types/user.type';
-import { registerService } from "../services/userService";
 import { AxiosError } from "axios";
-import type { TMessageError, TValidationError } from "../types/errors.type";
 import { useState } from "react";
+import { useForm } from 'react-hook-form';
+import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+import { registerService } from "../services/userService";
+import { useAuthStore } from '../store/authStore';
+import type { TMessageError, TValidationError } from "../types/errors.type";
+import type { TRegisterResult, TRegisterUser } from '../types/user.type';
+import navigateToRoleDashboard from '../utils/navigateToRoleDashboard';
 
 export const registerSchema = z.object({
     name: z
@@ -37,6 +39,8 @@ const useRegister = () => {
     const [unexpectedError, setUnexpectedError] = useState<string | undefined>(undefined)
     const loginToStore = useAuthStore((state) => state.login)
 
+    const navigate = useNavigate()
+
     const form = useForm<TRegisterForm>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -60,6 +64,8 @@ const useRegister = () => {
         },
         onSuccess: (result: TRegisterResult) => {
             loginToStore(result.data.user, result.data.token)
+
+            return navigateToRoleDashboard(navigate, result)
         },
         onError: (error: any) => {
             if (error instanceof AxiosError) {
@@ -76,6 +82,12 @@ const useRegister = () => {
                         if (emailError) form.setError("email", { message: emailError })
                         if (passwordError) form.setError("password", { message: passwordError })
 
+                        break
+                    case 409:
+                        const errConflict: TValidationError = error.response?.data
+                        const emailMessage: string = errConflict.error.email
+
+                        if (emailMessage) form.setError("email", { message: emailMessage })
                         break
                     case 401:
                         const unauth: TMessageError = error.response?.data

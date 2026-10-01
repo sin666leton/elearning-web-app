@@ -21,13 +21,13 @@ export const handlers = [
     //     code: "VALIDATION_ERROR"
     // }, { status: 422 })
 
-    // 422
+    // 409
     // return HttpResponse.json({
     //   error: {
     //     email: "Email sudah terdaftar",
     //   },
     //   code: "ALREADY_REGISTERED"
-    // }, { status: 422 })
+    // }, { status: 409 })
 
     // 403
     // return HttpResponse.json({
@@ -36,5 +36,18 @@ export const handlers = [
     //   },
     //   code: "ALREADY_REGISTERED"
     // }, { status: 403 })
+
+    // 200
+    return HttpResponse.json({
+      data: {
+        user: {
+          id: 1,
+          name: "zidan",
+          email: "z***n@example.com",
+          role: "murid",
+        },
+        token: "fake-token"
+      }
+    })
   })
 ]

@@ -28,7 +28,7 @@ export default function FormLogin() {
                 </div>
                 <div className="block pt-4">
                     <p className="text-center text-gray-500 pb-2 md:text-sm">Belum memiliki akun? <Link to={'/'} className="text-blue-500 hover:text-blue-600">daftar disini</Link></p>
-                    <button type="submit" disabled={isLoading} className="bg-blue-500 text-white font-semibold w-full py-3 rounded-full cursor-pointer hover:bg-blue-600 transition-all disabled:opacity-50">
+                    <button type="submit" disabled={isLoading} className="bg-blue-500 text-white font-semibold w-full py-3 rounded-full cursor-pointer hover:bg-blue-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                         {isLoading ? 'Loading...' : 'Kirim'}
                     </button>
                 </div>
