@@ -15,6 +15,16 @@ export type TLoginResult = TApiResponse<{
     token: string
 }>
 
+export type TRegisterResult = TApiResponse<{
+    user: {
+        id: number,
+        name: string,
+        email: string,
+        role: string
+    },
+    token: string
+}>
+
 export type TRegisterUser = {
     name: string,
     email: string,

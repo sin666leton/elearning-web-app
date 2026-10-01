@@ -1,11 +1,10 @@
 import { z } from "zod";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query'
-import { useAuthStore } from '../store/authStore'
-import { useNavigate } from 'react-router-dom'
-import type { TLoginCredential, TLoginResult } from '../types/user.type'
-import { loginService } from "../services/userService";
+import { useMutation } from '@tanstack/react-query';
+import { useAuthStore } from '../store/authStore';
+import type { TRegisterResult, TRegisterUser } from '../types/user.type';
+import { registerService } from "../services/userService";
 import { AxiosError } from "axios";
 import type { TMessageError, TValidationError } from "../types/errors.type";
 import { useState } from "react";
@@ -37,7 +36,6 @@ export type TRegisterForm = z.infer<typeof registerSchema>
 const useRegister = () => {
     const [unexpectedError, setUnexpectedError] = useState<string | undefined>(undefined)
     const loginToStore = useAuthStore((state) => state.login)
-    // const navigate = useNavigate()
 
     const form = useForm<TRegisterForm>({
         resolver: zodResolver(registerSchema),
@@ -50,19 +48,18 @@ const useRegister = () => {
         }
     })
 
-    const login = useMutation({
-        mutationFn: async (data: TLoginCredential) => {
+    const register = useMutation({
+        mutationFn: async (data: TRegisterUser) => {
             try {
-                const response = await loginService(data)
+                const response = await registerService(data)
 
                 return response.data
             } catch (error: any) {
                 throw error
             }
         },
-        onSuccess: (result: TLoginResult) => {
+        onSuccess: (result: TRegisterResult) => {
             loginToStore(result.data.user, result.data.token)
-            // alert(`Login berhasil! Halo, ${data.user.name}`)
         },
         onError: (error: any) => {
             if (error instanceof AxiosError) {
@@ -70,7 +67,7 @@ const useRegister = () => {
                     case 422:
                         const err: TValidationError = error.response?.data
                         const nameError: string = err.error.name
-                        const roleError: string = err.error.role
+                        const roleError: string = err.error.role_id || err.error.role
                         const emailError: string = err.error.email
                         const passwordError: string = err.error.password
 
@@ -91,19 +88,26 @@ const useRegister = () => {
             }
 
             form.setValue("password", "")
+            form.setValue("repeatPassword", "")
         },
     })
 
-    const handleLogin = form.handleSubmit((data) => {
-        login.mutate(data)
+    const handleRegister = form.handleSubmit((data) => {
+        const payload: TRegisterUser = {
+            name: data.name,
+            email: data.email,
+            password: data.password,
+            role_id: Number(data.role_id)
+        }
+        register.mutate(payload)
     })
 
     return {
         form,
-        handleLogin,
-        isLoading: login.isPending,
+        handleRegister,
+        isLoading: register.isPending,
         unexpectedError: unexpectedError
     }
 }
 
-export default useRegister
+export default useRegister;
