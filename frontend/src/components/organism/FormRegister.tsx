@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import useRegister from '../../hooks/useRegister';
+import { useGetAllRole } from '../../hooks/useGetAllRole';
+import { useEffect } from 'react';
 
 export default function FormRegister() {
     const {
@@ -12,11 +14,13 @@ export default function FormRegister() {
         unexpectedError
     } = useRegister()
 
+    const { data, isError, isLoading: roleLoading } = useGetAllRole()
+
     return (
         <form action="#" method="POST" onSubmit={handleRegister} className="w-full">
-            {unexpectedError && (
+            {unexpectedError || isError && (
                 <div className="text-sm text-center bg-red-50 border border-red-200 text-red-600 font-medium py-3 px-4 rounded-md mb-6">
-                    {unexpectedError}
+                    {unexpectedError || "Terjadi kesalahan pada server"}
                 </div>
             )}
 
@@ -28,7 +32,7 @@ export default function FormRegister() {
                             type="text"
                             id="name"
                             {...register("name")}
-                            disabled={isLoading}
+                            disabled={isLoading || isError || roleLoading}
                             className="w-full border border-mist-400 rounded-sm py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200"
                             placeholder="Nama lengkap anda"
                         />
@@ -40,7 +44,7 @@ export default function FormRegister() {
                         <select
                             id="role_id"
                             {...register("role_id")}
-                            disabled={isLoading}
+                            disabled={isLoading || isError || roleLoading}
                             defaultValue=""
                             className="w-full border border-mist-400 rounded-sm py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200"
                         >
@@ -58,7 +62,7 @@ export default function FormRegister() {
                         type="email"
                         id="email"
                         {...register("email")}
-                        disabled={isLoading}
+                        disabled={isLoading || isError || roleLoading}
                         className="w-full border border-mist-400 rounded-sm py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200"
                         placeholder="Email anda"
                     />
@@ -72,7 +76,7 @@ export default function FormRegister() {
                             type="password"
                             id="password"
                             {...register("password")}
-                            disabled={isLoading}
+                            disabled={isLoading || isError || roleLoading}
                             className="w-full border border-mist-400 rounded-sm py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200"
                         />
                         {errors.password && <p className="text-xs text-red-500 font-medium mt-1">* {errors.password.message}</p>}
@@ -84,7 +88,7 @@ export default function FormRegister() {
                             type="password"
                             id="repeatPassword"
                             {...register("repeatPassword")}
-                            disabled={isLoading}
+                            disabled={isLoading || isError || roleLoading}
                             className="w-full border border-mist-400 rounded-sm py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200"
                         />
                         {errors.repeatPassword && <p className="text-xs text-red-500 font-medium mt-1">* {errors.repeatPassword.message}</p>}
@@ -96,10 +100,10 @@ export default function FormRegister() {
                     <p className="text-center text-gray-500 text-sm">Sudah memiliki akun? <Link to={'/login'} className="text-blue-500 hover:text-blue-600 font-medium">login disini</Link></p>
                     <button
                         type="submit"
-                        disabled={isLoading}
+                        disabled={isLoading || isError || roleLoading}
                         className="bg-blue-500 text-white font-semibold w-full max-w-xs py-3 rounded-full cursor-pointer hover:bg-blue-600 transition-all disabled:opacity-50"
                     >
-                        {isLoading ? 'Loading...' : 'Daftar'}
+                        {isLoading || isError || roleLoading ? 'Loading...' : 'Daftar'}
                     </button>
                 </div>
             </div>

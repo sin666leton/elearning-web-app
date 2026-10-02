@@ -1,53 +1,80 @@
 import { http, HttpResponse, delay } from 'msw'
 
 export const handlers = [
-  http.post('http://localhost:3000/api/v1/register', async ({ request }) => {
-    await delay(2000)
+  http.post('http://localhost:3000/api/v1/login', async ({ request }) => {
+    delay(2000)
 
-    try {
-      const body = await request.json()
-    } catch (e) {
-      console.log('Error parsing JSON in mock:', e)
-    }
-
-    // 422
-    // return HttpResponse.json({
-    //   error: {
-    //     email: "Email tidak valid",
-    //     name: "Nama tidak valid",
-    //     password: "Password tidak valid",
-    //     role_id: "Role tidak valid",
-    //   },
-    //     code: "VALIDATION_ERROR"
-    // }, { status: 422 })
-
-    // 409
-    // return HttpResponse.json({
-    //   error: {
-    //     email: "Email sudah terdaftar",
-    //   },
-    //   code: "ALREADY_REGISTERED"
-    // }, { status: 409 })
-
-    // 403
-    // return HttpResponse.json({
-    //   error: {
-    //     message: "Harus logout terlebih dahulu",
-    //   },
-    //   code: "ALREADY_REGISTERED"
-    // }, { status: 403 })
-
-    // 200
     return HttpResponse.json({
       data: {
         user: {
           id: 1,
-          name: "zidan",
-          email: "z***n@example.com",
-          role: "murid",
+          name: 'Zidan',
+          email: 'z***n@elearning.com',
+          role: 'siswa'
         },
-        token: "fake-token"
+        token: 'fake-token'
       }
-    })
+    }, { status: 200 })
+  }),
+
+  http.get('http://localhost:3000/api/v1/roles', async ({ request }) => {
+    delay(2000)
+
+    return HttpResponse.json({
+      data: [
+        { id: 1, name: 'Siswa' },
+        { id: 2, name: 'Guru' }
+      ]
+    }, { status: 200 })
   })
+
+  // http.post('http://localhost:3000/api/v1/register', async ({ request }) => {
+  //   await delay(2000)
+
+  //   try {
+  //     const body = await request.json()
+  //   } catch (e) {
+  //     console.log('Error parsing JSON in mock:', e)
+  //   }
+
+  //   // 422
+  //   // return HttpResponse.json({
+  //   //   error: {
+  //   //     email: "Email tidak valid",
+  //   //     name: "Nama tidak valid",
+  //   //     password: "Password tidak valid",
+  //   //     role_id: "Role tidak valid",
+  //   //   },
+  //   //     code: "VALIDATION_ERROR"
+  //   // }, { status: 422 })
+
+  //   // 409
+  //   // return HttpResponse.json({
+  //   //   error: {
+  //   //     email: "Email sudah terdaftar",
+  //   //   },
+  //   //   code: "ALREADY_REGISTERED"
+  //   // }, { status: 409 })
+
+  //   // 403
+  //   // return HttpResponse.json({
+  //   //   error: {
+  //   //     message: "Harus logout terlebih dahulu",
+  //   //   },
+  //   //   code: "ALREADY_REGISTERED"
+  //   // }, { status: 403 })
+
+  //   // 200
+  //   return HttpResponse.json({
+  //     data: {
+  //       user: {
+  //         id: 1,
+  //         name: "zidan",
+  //         email: "z***n@example.com",
+  //         role: "murid",
+  //       },
+  //       token: "fake-token"
+  //     }
+  //   })
+  // })
 ]

@@ -5,7 +5,7 @@ Endpoint
 ```
 POST /api/v1/login
 content-type: "application/json"
-
+ 
 {
     email: string,
     password: string
@@ -21,7 +21,7 @@ content-type: "application/json"
         name: 'Zidan',
         email: 'z***n@elearning.com',
         role: 'student'
-        },
+    },
         token: 'fake-token'
     }
 }
@@ -101,5 +101,25 @@ content-type: "application/json"
         email: "Email sudah terdaftar",
     },
     code: "ALREADY_REGISTERED"
+}
+```
+## Role
+Endpoint
+```
+GET /api/v1/roles
+content-type: "application/json"
+```
+
+### Response
+200 OK
+```
+{
+    data: [
+        {
+            id: number,
+            name: string
+        },
+        ...
+    ]
 }
 ```
