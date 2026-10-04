@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 
 export interface User {
   id: number
@@ -9,25 +10,25 @@ export interface User {
 
 interface AuthState {
   user: User | null
-  token: string | null
-  
-  // Actions
-  login: (user: User, token: string) => void
+
+  login: (user: User) => void
   logout: () => void
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  token: null,
-  
-  login: (user, token) => {
-    // Simpan token ke localStorage agar tetap login saat halaman di-refresh
-    localStorage.setItem('auth_token', token)
-    set({ user, token })
-  },
-  
-  logout: () => {
-    localStorage.removeItem('auth_token')
-    set({ user: null, token: null })
-  }
-}))
+export const useAuthStore = create<Partial<AuthState>>()(
+  persist(
+    (set) => ({
+      user: null,
+
+      login: (user) => {
+        set({ user })
+      },
+
+      logout: () => {
+        set({ user: null })
+      }
+    }),
+    {
+      name: 'auth-user'
+    },
+  ))

@@ -6,23 +6,17 @@ export type TLoginCredential = {
 }
 
 export type TLoginResult = TApiResponse<{
-    user: {
-        id: number,
-        name: string,
-        email: string,
-        role: string
-    },
-    token: string
+    id: number,
+    name: string,
+    email: string,
+    role: string
 }>
 
 export type TRegisterResult = TApiResponse<{
-    user: {
-        id: number,
-        name: string,
-        email: string,
-        role: string
-    },
-    token: string
+    id: number,
+    name: string,
+    email: string,
+    role: string
 }>
 
 export type TRegisterUser = {
@@ -31,3 +25,10 @@ export type TRegisterUser = {
     password: string,
     role_id: number
 }
+
+export type TAuthUser = TApiResponse<{
+    id: number,
+    name: string,
+    email: string,
+    role: string
+}>

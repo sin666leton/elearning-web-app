@@ -10,6 +10,7 @@ import { useAuthStore } from '../store/authStore';
 import type { TMessageError, TValidationError } from "../types/errors.type";
 import type { TRegisterResult, TRegisterUser } from '../types/user.type';
 import navigateToRoleDashboard from '../utils/navigateToRoleDashboard';
+import { getCSRFToken } from '@/services/laravelService';
 
 export const registerSchema = z.object({
     name: z
@@ -55,15 +56,17 @@ const useRegister = () => {
     const register = useMutation({
         mutationFn: async (data: TRegisterUser) => {
             try {
+                await getCSRFToken()
+
                 const response = await registerService(data)
 
-                return response.data
+                return response
             } catch (error: any) {
                 throw error
             }
         },
         onSuccess: (result: TRegisterResult) => {
-            loginToStore(result.data.user, result.data.token)
+            loginToStore(result.data)
 
             return navigateToRoleDashboard(navigate, result)
         },

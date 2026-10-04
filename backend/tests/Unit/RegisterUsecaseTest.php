@@ -104,7 +104,6 @@ class RegisterUsecaseTest extends TestCase
             'Zidan',
             'z***n@mail.com',
             'Student',
-            'fake-token'
         );
 
         $this->user->shouldReceive('create')
@@ -115,7 +114,6 @@ class RegisterUsecaseTest extends TestCase
         $result = $this->usecase->handle($command);
 
         $this->assertInstanceOf(AuthUserDTO::class, $result);
-        $this->assertNotNull($result->token);
         $this->assertEquals('z***n@mail.com', $result->email);
     }
 }

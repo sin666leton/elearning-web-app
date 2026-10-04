@@ -9,6 +9,8 @@ import { loginService } from "../services/userService";
 import { AxiosError } from "axios";
 import type { TMessageError, TValidationError } from "../types/errors.type";
 import { useState } from "react";
+import { getCSRFToken } from "@/services/laravelService";
+import navigateToRoleDashboard from "@/utils/navigateToRoleDashboard";
 
 export const loginSchema = z.object({
     email: z
@@ -25,7 +27,7 @@ export type TLoginForm = z.infer<typeof loginSchema>
 const useLogin = () => {
     const [unexpectedError, setUnexpectedError] = useState<string | undefined>(undefined)
     const loginToStore = useAuthStore((state) => state.login)
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const form = useForm<TLoginForm>({
         resolver: zodResolver(loginSchema),
@@ -38,6 +40,8 @@ const useLogin = () => {
     const login = useMutation({
         mutationFn: async (data: TLoginCredential) => {
             try {
+                await getCSRFToken()
+
                 const response = await loginService(data)
 
                 return response.data
@@ -46,8 +50,10 @@ const useLogin = () => {
             }
         },
         onSuccess: (result: TLoginResult) => {
-            loginToStore(result.data.user, result.data.token)
+            loginToStore(result.data)
             // alert(`Login berhasil! Halo, ${data.user.name}`)
+
+            return navigateToRoleDashboard(navigate, result)
         },
         onError: (error: any) => {
             if (error instanceof AxiosError) {

@@ -75,7 +75,6 @@ class AuthContractTest extends TestCase
         ));
 
         $this->assertInstanceOf(AuthUserDTO::class, $result);
-        $this->assertNotNull($result->token);
         $this->assertEquals('e*****e@mail.com', $result->email);
     }
 }

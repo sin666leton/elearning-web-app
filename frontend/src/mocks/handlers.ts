@@ -1,34 +1,37 @@
 import { http, HttpResponse, delay } from 'msw'
 
 export const handlers = [
-  http.post('http://localhost:3000/api/v1/login', async ({ request }) => {
-    delay(2000)
+  // http.get('http://localhost:8000/sanctum/csrf-cookie', async ({ request }) => {
+  //   return HttpResponse.json({}, { status: 200 })
+  // }),
+  // http.post('http://localhost:8000/api/v1/login', async ({ request }) => {
+  //   delay(2000)
 
-    return HttpResponse.json({
-      data: {
-        user: {
-          id: 1,
-          name: 'Zidan',
-          email: 'z***n@elearning.com',
-          role: 'siswa'
-        },
-        token: 'fake-token'
-      }
-    }, { status: 200 })
-  }),
+  //   return HttpResponse.json({
+  //     data: {
+  //       user: {
+  //         id: 1,
+  //         name: 'Zidan',
+  //         email: 'z***n@elearning.com',
+  //         role: 'siswa'
+  //       },
+  //       token: 'fake-token'
+  //     }
+  //   }, { status: 200 })
+  // }),
 
-  http.get('http://localhost:3000/api/v1/roles', async ({ request }) => {
-    delay(2000)
+  // http.get('http://localhost:8000/api/v1/roles', async ({ request }) => {
+  //   delay(2000)
 
-    return HttpResponse.json({
-      data: [
-        { id: 1, name: 'Siswa' },
-        { id: 2, name: 'Guru' }
-      ]
-    }, { status: 200 })
-  })
+  //   return HttpResponse.json({
+  //     data: [
+  //       { id: 1, name: 'Siswa' },
+  //       { id: 2, name: 'Guru' }
+  //     ]
+  //   }, { status: 200 })
+  // }),
 
-  // http.post('http://localhost:3000/api/v1/register', async ({ request }) => {
+  // http.post('http://localhost:8000/api/v1/register', async ({ request }) => {
   //   await delay(2000)
 
   //   try {
@@ -67,14 +70,15 @@ export const handlers = [
   //   // 200
   //   return HttpResponse.json({
   //     data: {
-  //       user: {
-  //         id: 1,
-  //         name: "zidan",
-  //         email: "z***n@example.com",
-  //         role: "murid",
-  //       },
-  //       token: "fake-token"
+  //       id: 1,
+  //       name: "zidan",
+  //       email: "z***n@example.com",
+  //       role: "murid",
   //     }
   //   })
   // })
+
+  http.delete('http://localhost:8000/api/v1/logout', async ({ request }) => {
+    return HttpResponse.json({}, { status: 204 })
+  })
 ]

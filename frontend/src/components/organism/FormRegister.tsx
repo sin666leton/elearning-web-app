@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import useRegister from '../../hooks/useRegister';
 import { useGetAllRole } from '../../hooks/useGetAllRole';
-import { useEffect } from 'react';
 
 export default function FormRegister() {
     const {
@@ -49,8 +48,7 @@ export default function FormRegister() {
                             className="w-full border border-mist-400 rounded-sm py-2 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed disabled:border-gray-200"
                         >
                             <option value="" disabled>Pilih peran...</option>
-                            <option value="1">Siswa</option>
-                            <option value="2">Guru</option>
+                            {data && data.data.map(role => <option key={role.id} value={role.id}>{role.name}</option>)}
                         </select>
                         {errors.role_id && <p className="text-xs text-red-500 font-medium mt-1">* {errors.role_id.message}</p>}
                     </div>

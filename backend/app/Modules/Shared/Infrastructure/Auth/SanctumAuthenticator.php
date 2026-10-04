@@ -7,6 +7,7 @@ use App\Modules\Shared\Application\Contracts\AuthContract;
 use App\Modules\Shared\Application\DTOs\AuthUserDTO;
 use App\Modules\Shared\Exceptions\InvalidCredentialException;
 use App\Modules\Shared\Utils\HideEmail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class SanctumAuthenticator implements AuthContract
@@ -31,12 +32,13 @@ class SanctumAuthenticator implements AuthContract
         if (!Hash::check($command->password, $user->password))
             throw new InvalidCredentialException();
 
+        Auth::login($user);
+
         return new AuthUserDTO(
             $user->id,
             $user->name,
             HideEmail::transform($user->email),
             $user->role_name,
-            $user->createToken('auth-token')->plainTextToken
         );
     }
 }

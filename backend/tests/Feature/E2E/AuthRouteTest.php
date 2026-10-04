@@ -92,22 +92,22 @@ class AuthRouteTest extends TestCase
     {
         $user = $this->createUser();
 
-        $res = $this->postJson('/api/v1/login', [
+        $res = $this->withHeader('Referer', 'localhost:5173')
+        ->withSession([])
+        ->postJson('/api/v1/login', [
             'email' => $user->email,
             'password' => '12345'
         ]);
 
         $res->assertStatus(200)
             ->assertJson(function (AssertableJson $json) use (&$user) {
-                $json->has('data.token');
-                $json->has('data.user.id');
+                $json->has('data.id');
 
-                $json->whereType('data.token', 'string');
-                $json->whereType('data.user.id', 'integer');
+                $json->whereType('data.id', 'integer');
 
-                $json->where('data.user.name', $user->name);
-                $json->where('data.user.email', 'e*****e@mail.com');
-                $json->where('data.user.role', $user->role->name);
+                $json->where('data.name', $user->name);
+                $json->where('data.email', 'e*****e@mail.com');
+                $json->where('data.role', $user->role->name);
             });
     }
 
@@ -159,7 +159,11 @@ class AuthRouteTest extends TestCase
     {
         $role = \App\Models\Role::factory()->createOne();
 
-        $res = $this->postJson('/api/v1/register', [
+        $res = $this->withHeaders([
+            'Referer' => 'http://localhost:5173',
+        ])
+        ->withSession([])
+        ->postJson('/api/v1/register', [
             'name' => 'Zidan',
             'email' => 'zidan@elearning.com',
             'role_id' => $role->id,
@@ -168,15 +172,13 @@ class AuthRouteTest extends TestCase
 
         $res->assertStatus(200)
             ->assertJson(function (AssertableJson $json) use (&$role) {
-                $json->has('data.token');
-                $json->has('data.user.id');
+                $json->has('data.id');
 
-                $json->whereType('data.token', 'string');
-                $json->whereType('data.user.id', 'integer');
+                $json->whereType('data.id', 'integer');
 
-                $json->where('data.user.name', 'Zidan');
-                $json->where('data.user.email', 'z***n@elearning.com');
-                $json->has('data.user.role');
+                $json->where('data.name', 'Zidan');
+                $json->where('data.email', 'z***n@elearning.com');
+                $json->has('data.role');
             });
 
         $this->assertDatabaseHas('users', [

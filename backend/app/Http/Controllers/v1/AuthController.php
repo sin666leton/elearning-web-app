@@ -28,6 +28,8 @@ class AuthController extends Controller
             $request->input('password')
         ));
 
+        $request->session()->regenerate();
+
         return response()->json([
             'data' => $result->toJSON()
         ]);
@@ -39,6 +41,8 @@ class AuthController extends Controller
             $request->input('email'),
             $request->input('password')
         ));
+
+        $request->session()->regenerate();
 
         return response()->json([
             'data' => $result->toJSON()

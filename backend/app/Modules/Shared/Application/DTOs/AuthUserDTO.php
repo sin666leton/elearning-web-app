@@ -9,20 +9,16 @@ class AuthUserDTO
         public readonly string $name,
         public readonly string $email,
         public readonly string $roleName,
-        public readonly string $token
     ) {
     }
 
     public function toJSON()
     {
         return [
-            'user' => [
-                'id' => $this->id,
-                'name' => $this->name,
-                'email' => $this->email,
-                'role' => $this->roleName
-            ],
-            'token' => $this->token
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'role' => $this->roleName
         ];
     }
 }
