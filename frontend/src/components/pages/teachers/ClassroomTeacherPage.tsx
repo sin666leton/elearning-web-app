@@ -1,3 +1,4 @@
+import TableListClassroom from "@/components/organism/TableListClassroom";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/lib/shadcn/components/ui/table";
 import { Edit2Icon, Trash2Icon, PlusIcon, SearchIcon } from "lucide-react";
 
@@ -30,64 +31,7 @@ export default function ClassroomTeacherPage() {
                     </div>
                 </div>
 
-                <Table>
-                    <TableHeader className="bg-gray-50/75">
-                        <TableRow className="hover:bg-transparent">
-                            <TableHead className="font-semibold text-gray-700 pl-6">Nama Kelas</TableHead>
-                            <TableHead className="font-semibold text-gray-700 w-[120px]">Peserta</TableHead>
-                            <TableHead className="font-semibold text-gray-700 hidden md:table-cell">Dibuat pada</TableHead>
-                            <TableHead className="font-semibold text-gray-700 text-right pr-6">Aksi</TableHead>
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <TableRow className="group transition-colors hover:bg-gray-50/50">
-                            <TableCell className="font-medium text-gray-900 pl-6">
-                                Web Programming
-                                <div className="text-xs text-gray-500 font-normal mt-0.5 md:hidden">10 September 2026</div>
-                            </TableCell>
-                            <TableCell>
-                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                    20 Siswa
-                                </span>
-                            </TableCell>
-                            <TableCell className="text-gray-500 hidden md:table-cell">10 September 2026</TableCell>
-                            <TableCell className="text-right pr-6">
-                                <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors" title="Edit">
-                                        <Edit2Icon className="h-4 w-4" />
-                                    </button>
-                                    <button className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors" title="Hapus">
-                                        <Trash2Icon className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            </TableCell>
-                        </TableRow>
-
-                        {/* Baris 2 */}
-                        <TableRow className="group transition-colors hover:bg-gray-50/50">
-                            <TableCell className="font-medium text-gray-900 pl-6">
-                                UI/UX Design Fundamentals
-                                <div className="text-xs text-gray-500 font-normal mt-0.5 md:hidden">15 September 2026</div>
-                            </TableCell>
-                            <TableCell>
-                                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                    35 Siswa
-                                </span>
-                            </TableCell>
-                            <TableCell className="text-gray-500 hidden md:table-cell">15 September 2026</TableCell>
-                            <TableCell className="text-right pr-6">
-                                <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-md transition-colors" title="Edit">
-                                        <Edit2Icon className="h-4 w-4" />
-                                    </button>
-                                    <button className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-md transition-colors" title="Hapus">
-                                        <Trash2Icon className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+                <TableListClassroom />
             </div>
         </div>
     )

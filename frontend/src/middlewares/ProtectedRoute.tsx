@@ -12,8 +12,6 @@ export default function ProtectedRoute({ allow }: IProtectedRoute) {
     const login = useAuthStore(state => state.login)
     const logout = useAuthStore(state => state.logout)
 
-    console.log(!user)
-
     const { data, isLoading, isSuccess, isFetched, isError } = useCheckUser()
     const navigate = useNavigate()
 
@@ -32,8 +30,6 @@ export default function ProtectedRoute({ allow }: IProtectedRoute) {
 
     useEffect(() => {
         if (user) {
-
-            console.log("sudah login")
 
             if (allow === undefined) {
                 navigate(`/${user.role}/dashboard`, { replace: true })

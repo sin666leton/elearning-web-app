@@ -15,7 +15,6 @@ use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 #[Group('register')]
-#[Group('current')]
 class RegisterUsecaseTest extends TestCase
 {
     /**

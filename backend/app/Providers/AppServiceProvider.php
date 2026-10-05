@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Modules\Classroom\Infrastructure\Services\ClassroomwithParticipantService;
 use App\Modules\Role\Application\Contracts\RoleQueryContract;
 use App\Modules\Role\Infrastructure\Repositories\Commands\RoleSharedCommand;
 use App\Modules\Role\Infrastructure\Repositories\Queries\RoleQueryRepository;
 use App\Modules\Shared\Application\Contracts\AuthContract;
 use App\Modules\Shared\Application\Contracts\RoleSharedContract;
+use App\Modules\Shared\Application\Services\PaginateClassroomWithParticipantService;
 use App\Modules\Shared\Infrastructure\Auth\SanctumAuthenticator;
 use App\Modules\User\Application\Contracts\UserCommandContract;
 use App\Modules\User\Infrastructure\Repositories\Commands\UserCommandRepository;
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(RoleSharedContract::class, RoleSharedCommand::class);
         $this->app->bind(UserCommandContract::class, UserCommandRepository::class);
         $this->app->bind(RoleQueryContract::class, RoleQueryRepository::class);
+        $this->app->bind(PaginateClassroomWithParticipantService::class, ClassroomwithParticipantService::class);
     }
 
     /**

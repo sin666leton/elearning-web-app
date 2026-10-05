@@ -80,5 +80,60 @@ export const handlers = [
 
   http.delete('http://localhost:8000/api/v1/logout', async ({ request }) => {
     return HttpResponse.json({}, { status: 204 })
+  }),
+  http.get('http://localhost:8000/api/v1/user', async ({ request }) => {
+    return HttpResponse.json({
+      data: {
+        id: 1,
+        name: "Ahmad Zidan",
+        email: "z***n@example.com",
+        role: "guru"
+      }
+    }, { status: 200 })
+  }),
+  http.get('http://localhost:8000/api/v1/classrooms', async ({ request }) => {
+    await delay(2000)
+
+    return HttpResponse.json({
+      data: {
+        data: [
+          {
+            id: 1,
+            name: "Web Programming",
+            participants: 20,
+            createdAt: "5 Oktokber 2026"
+          },
+          {
+            id: 2,
+            name: "Content Creator",
+            participants: 20,
+            createdAt: "10 Oktokber 2026"
+          },
+          {
+            id: 3,
+            name: "Makeup Artist",
+            participants: 30,
+            createdAt: "1 Oktokber 2026"
+          },
+          {
+            id: 4,
+            name: "Bahasa Inggris",
+            participants: 19,
+            createdAt: "9 Septemebr 2026"
+          },
+          {
+            id: 5,
+            name: "Bahasa Jepang",
+            participants: 25,
+            createdAt: "20 Oktokber 2026"
+          }
+        ],
+        metadata: {
+          lastPage: 3,
+          currentPage: 1,
+          pages: [1, 2, 3]
+        }
+      }
+    })
   })
 ]

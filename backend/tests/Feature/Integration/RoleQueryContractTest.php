@@ -10,7 +10,6 @@ use Illuminate\Foundation\Testing\WithFaker;
 use PHPUnit\Framework\Attributes\Group;
 use Tests\TestCase;
 
-#[Group('current')]
 class RoleQueryContractTest extends TestCase
 {
     private RoleQueryContract $contract;

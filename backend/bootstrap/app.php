@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Middleware\AuthOnlyMiddleware;
+use App\Http\Middleware\StudentOnlyMiddleware;
+use App\Http\Middleware\TeacherOnlyMiddleware;
 use App\Http\Middleware\UnauthOnlyMiddleware;
 use App\Modules\Shared\Exceptions\ApplicationException;
 use Illuminate\Foundation\Application;
@@ -22,7 +24,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->alias([
             'authOnly' => AuthOnlyMiddleware::class,
-            'unauthOnly' => UnauthOnlyMiddleware::class
+            'unauthOnly' => UnauthOnlyMiddleware::class,
+            'studentOnly' => StudentOnlyMiddleware::class,
+            'teacherOnly' => TeacherOnlyMiddleware::class
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
